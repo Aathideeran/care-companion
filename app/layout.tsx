@@ -3,8 +3,8 @@ import type { Metadata, Viewport } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'v0 App',
-  description: 'Created with v0',
+  title: 'AI Care Companion | Connected care, better outcomes',
+  description: 'AI Care Companion connects patients and healthcare professionals through personalized treatment plans, reminders, symptom tracking, and responsible AI-assisted insights.',
   generator: 'v0.app',
   icons: {
     icon: [
