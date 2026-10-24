@@ -20,6 +20,28 @@ create index if not exists health_measurements_patient_type_idx on public.health
 create index if not exists appointments_doctor_time_idx on public.appointments(doctor_id, starts_at);
 
 alter table public.profiles enable row level security;
+
+create policy "profiles_select_own" on public.profiles for select to authenticated using ((select auth.uid()) = id);
+create policy "profiles_insert_own" on public.profiles for insert to authenticated with check ((select auth.uid()) = id);
+create policy "profiles_update_own" on public.profiles for update to authenticated using ((select auth.uid()) = id) with check ((select auth.uid()) = id);
+
+create or replace function public.handle_new_user()
+returns trigger
+language plpgsql
+security definer
+set search_path = ''
+as $$
+begin
+  insert into public.profiles (id, full_name, role, preferred_language)
+  values (new.id, coalesce(new.raw_user_meta_data ->> 'full_name', 'New member'), 'patient', coalesce(new.raw_user_meta_data ->> 'preferred_language', 'en'))
+  on conflict (id) do nothing;
+  return new;
+end;
+$$;
+
+drop trigger if exists on_auth_user_created on auth.users;
+create trigger on_auth_user_created after insert on auth.users for each row execute function public.handle_new_user();
+
 alter table public.doctor_profiles enable row level security;
 alter table public.patient_doctor_relationships enable row level security;
 alter table public.treatment_plans enable row level security;
