@@ -1,6 +1,6 @@
 # AI Care Companion
 
-This starter is a professional, interactive demonstration surface for the AI Care Companion platform. Because no integrations or environment variables were enabled for this generation, the workspace is explicitly labeled **Demo mode**: interactions are client-side only and are not presented as persisted or connected.
+This starter is the public experience for the AI Care Companion platform. Because no integrations or environment variables are enabled for this generation, authentication and connected care workflows remain unavailable until Supabase is configured.
 
 ## Connect the real stack
 
@@ -10,7 +10,7 @@ This starter is a professional, interactive demonstration surface for the AI Car
 4. Add an AI provider key to a server-only environment variable and implement the provider adapter behind a route handler. Keep emergency rules deterministic and clinician-reviewed; do not use an LLM as the sole triage mechanism.
 5. Add a secure cron endpoint and provider-backed delivery receipts before claiming email/SMS/push reminders were delivered.
 
-## Demo workspace
+## Connected workspace setup
 
 Use the Patient view and Doctor view toggles in the interactive workspace to exercise care plan, symptom check-in, appointment slot selection, patient review, and AI assistant flows. The assistant response clearly states that the live provider is not configured.
 
